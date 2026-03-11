@@ -1,19 +1,14 @@
-import readline from "readline";
 import { handleExit } from "./modules/handleExit.js";
+import { initReadline } from "./modules/initReadline.js";
 
 const cmdActions = {
   ".exit": handleExit,
 };
 
 const app = () => {
-  const readLine = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-    prompt: "> ",
-  });
+  const { readLine, startApp, addPrompt, handleIncorrectInput } = initReadline();
 
-  console.log("Welcome to Data Processing CLI!");
-  readLine.prompt();
+  startApp();
 
   readLine.on("line", (line) => {
     const lineCommandWithoutWhitespaces = line.trim();
@@ -21,10 +16,9 @@ const app = () => {
 
     if (lineCommandWithoutWhitespaces in cmdActions) {
       cmdActions[lineCommandWithoutWhitespaces]();
-      readLine.prompt();
+      addPrompt();
     } else {
-      console.log("Invalid input");
-      readLine.prompt();
+      handleIncorrectInput();
     }
   });
 
