@@ -6,7 +6,7 @@ const cmdActions = {
 };
 
 const app = () => {
-  const { readLine, startApp, addPrompt, handleIncorrectInput } = initReadline();
+  const { readLine, startApp, addPrompt, handleSuccessCommand, handleIncorrectCommand } = initReadline();
 
   startApp();
 
@@ -16,9 +16,9 @@ const app = () => {
 
     if (lineCommandWithoutWhitespaces in cmdActions) {
       cmdActions[lineCommandWithoutWhitespaces]();
-      addPrompt();
+      handleSuccessCommand();
     } else {
-      handleIncorrectInput();
+      handleIncorrectCommand();
     }
   });
 

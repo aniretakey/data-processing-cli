@@ -1,4 +1,5 @@
 import readline from "readline";
+import { getCurrentWorkingDirectory } from "./getCurrentWorkingDirectory.js";
 
 export const initReadline = () => {
   const readLine = readline.createInterface({
@@ -14,10 +15,16 @@ export const initReadline = () => {
     addPrompt();
   };
 
-  const handleIncorrectInput = () => {
+  const handleSuccessCommand = () => {
+    const currDir = getCurrentWorkingDirectory();
+    console.log(`You are currently in ${currDir}`);
+    addPrompt();
+  };
+
+  const handleIncorrectCommand = () => {
     console.log("Invalid input");
     addPrompt();
   };
 
-  return { readLine, startApp, addPrompt, handleIncorrectInput };
+  return { readLine, startApp, addPrompt, handleSuccessCommand, handleIncorrectCommand };
 };
