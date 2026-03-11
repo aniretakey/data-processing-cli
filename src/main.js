@@ -6,7 +6,8 @@ const cmdActions = {
 };
 
 const app = () => {
-  const { readLine, startApp, addPrompt, handleSuccessCommand, handleIncorrectCommand } = initReadline();
+  const { readLine, startApp, addPrompt, handleSuccessCommand, handleIncorrectCommand, handleFailedCommand } =
+    initReadline();
 
   startApp();
 

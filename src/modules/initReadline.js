@@ -26,5 +26,10 @@ export const initReadline = () => {
     addPrompt();
   };
 
-  return { readLine, startApp, addPrompt, handleSuccessCommand, handleIncorrectCommand };
+  const handleFailedCommand = () => {
+    console.log("Operation failed");
+    addPrompt();
+  };
+
+  return { readLine, startApp, addPrompt, handleSuccessCommand, handleIncorrectCommand, handleFailedCommand };
 };
