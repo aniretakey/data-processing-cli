@@ -10,15 +10,19 @@ export const initReadline = () => {
 
   const addPrompt = () => readLine.prompt();
 
-  const startApp = () => {
-    console.log("Welcome to Data Processing CLI!");
-    addPrompt();
+  const printCurrDirectory = () => {
+    const currDir = getCurrentWorkingDirectory();
+    console.log(`You are currently in ${currDir}`);
   };
 
   const handleSuccessCommand = () => {
-    const currDir = getCurrentWorkingDirectory();
-    console.log(`You are currently in ${currDir}`);
+    printCurrDirectory();
     addPrompt();
+  };
+
+  const startApp = () => {
+    console.log("Welcome to Data Processing CLI!");
+    handleSuccessCommand();
   };
 
   const handleIncorrectCommand = () => {
