@@ -1,8 +1,10 @@
 import { handleExit } from "./modules/handleExit.js";
 import { initReadline } from "./modules/initReadline.js";
+import { movesUpOneDirectory } from "./modules/navigation/movesUpOneDirectory.js";
 
 const cmdActions = {
   ".exit": handleExit,
+  up: movesUpOneDirectory,
 };
 
 const app = () => {
@@ -13,7 +15,6 @@ const app = () => {
 
   readLine.on("line", (line) => {
     const lineCommandWithoutWhitespaces = line.trim();
-    console.log("input command:", lineCommandWithoutWhitespaces);
 
     if (lineCommandWithoutWhitespaces in cmdActions) {
       cmdActions[lineCommandWithoutWhitespaces]();
