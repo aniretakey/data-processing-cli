@@ -27,6 +27,10 @@ const app = () => {
       if (commandStatus === COMMAND_RESULT.SUCCESS) {
         handleSuccessCommand();
       }
+
+      if (commandStatus === COMMAND_RESULT.ERROR) {
+        handleFailedCommand();
+      }
     } else {
       handleIncorrectCommand();
     }
