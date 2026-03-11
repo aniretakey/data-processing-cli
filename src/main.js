@@ -1,6 +1,7 @@
 import { handleExit } from "./modules/handleExit.js";
 import { initReadline } from "./modules/initReadline.js";
 import { movesUpOneDirectory } from "./modules/navigation/movesUpOneDirectory.js";
+import { COMMAND_RESULT } from "./const/const.js";
 
 const cmdActions = {
   ".exit": handleExit,
@@ -17,8 +18,15 @@ const app = () => {
     const lineCommandWithoutWhitespaces = line.trim();
 
     if (lineCommandWithoutWhitespaces in cmdActions) {
-      cmdActions[lineCommandWithoutWhitespaces]();
-      handleSuccessCommand();
+      const commandStatus = cmdActions[lineCommandWithoutWhitespaces]();
+
+      if (commandStatus === COMMAND_RESULT.NOTHING) {
+        addPrompt();
+      }
+
+      if (commandStatus === COMMAND_RESULT.SUCCESS) {
+        handleSuccessCommand();
+      }
     } else {
       handleIncorrectCommand();
     }
