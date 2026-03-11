@@ -1,4 +1,9 @@
 import readline from "readline";
+import { handleExit } from "./modules/handleExit.js";
+
+const cmdActions = {
+  ".exit": handleExit,
+};
 
 const app = () => {
   const readLine = readline.createInterface({
@@ -13,12 +18,18 @@ const app = () => {
   readLine.on("line", (line) => {
     const lineCommandWithoutWhitespaces = line.trim();
     console.log("input command:", lineCommandWithoutWhitespaces);
-    readLine.prompt();
+
+    if (lineCommandWithoutWhitespaces in cmdActions) {
+      cmdActions[lineCommandWithoutWhitespaces]();
+      readLine.prompt();
+    } else {
+      console.log("Invalid input");
+      readLine.prompt();
+    }
   });
 
   readLine.on("SIGINT", () => {
-    console.log("Thank you for using Data Processing CLI!");
-    process.exit();
+    handleExit();
   });
 };
 
