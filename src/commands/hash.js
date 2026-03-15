@@ -19,6 +19,7 @@ export const hash = async (args) => {
   }
 
   const filePath = resolveAndCheckFileExists(file);
+
   if (!filePath) {
     return COMMAND_RESULT.ERROR;
   }

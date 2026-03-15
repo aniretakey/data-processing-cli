@@ -11,10 +11,10 @@ const allowedCommandsList = [
   // "json-to-csv",
   "count",
   "hash",
+  "hash-compare",
   // "encrypt",
   // "decrypt",
   // "log-stats",
-  // "hash-compare",
 ];
 
 export const initReadline = () => {

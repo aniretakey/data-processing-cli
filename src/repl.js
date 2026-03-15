@@ -4,6 +4,7 @@ import { changeToSpecifiedDirectory, listContentForCurrentDirectory, movesUpOneD
 import { parseInput } from "./utils/argParser.js";
 import { getCount } from "./commands/count.js";
 import { hash } from "./commands/hash.js";
+import { hashCompare } from "./commands/hashCompare.js";
 
 // TODO: delete later!
 //  dir for testing E:\dev\Rolling Scopes School\RSS-Node\data-processing-cli\src
@@ -46,6 +47,10 @@ export const initRepl = () => {
 
     if (cmd === "hash") {
       commandStatus = await hash(argsParts);
+    }
+
+    if (cmd === "hash-compare") {
+      commandStatus = await hashCompare(argsParts);
     }
 
     processStatus(commandStatus);

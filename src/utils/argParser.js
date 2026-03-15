@@ -36,3 +36,30 @@ export const parseHashArgs = (args) => {
 
   return { file, algorithm, save };
 };
+
+export const parseHashCompareArgs = (args) => {
+  let file = null;
+  let hashFile = null;
+  let algorithm = "sha256";
+
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+
+    if (arg === "--input" && i + 1 < args.length) {
+      file = args[i + 1];
+      i++;
+    }
+
+    if (arg === "--algorithm" && i + 1 < args.length) {
+      algorithm = args[i + 1];
+      i++;
+    }
+
+    if (arg === "--hash") {
+      hashFile = args[i + 1];
+      i++;
+    }
+  }
+
+  return { file, hashFile, algorithm };
+};
