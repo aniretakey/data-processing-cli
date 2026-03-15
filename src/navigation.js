@@ -1,6 +1,7 @@
-import { isAbsolute, resolve } from "path";
+import { resolve } from "path";
 import { readdirSync, statSync } from "fs";
 import { COMMAND_RESULT } from "./const/const.js";
+import { resolvePathFromCwd } from "./utils/pathResolver.js";
 
 const movesUpOneDirectory = () => {
   const currentDir = process.cwd();
@@ -21,15 +22,7 @@ const changeToSpecifiedDirectory = (newPath) => {
     return COMMAND_RESULT.ERROR;
   }
 
-  const currentWorkingDir = process.cwd();
-
-  let finalPath;
-
-  if (isAbsolute(newPath)) {
-    finalPath = newPath;
-  } else {
-    finalPath = resolve(currentWorkingDir, newPath);
-  }
+  const finalPath = resolvePathFromCwd(newPath);
 
   try {
     const stats = statSync(finalPath);
