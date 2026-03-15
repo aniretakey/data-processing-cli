@@ -2,10 +2,7 @@ import { resolve } from "path";
 import { readdirSync, statSync } from "fs";
 import { COMMAND_RESULT } from "./const/const.js";
 import { resolvePathFromCwd } from "./utils/pathResolver.js";
-
-export const getCurrentWorkingDirectory = () => {
-  return process.cwd();
-};
+import { getCurrentWorkingDirectory, setCurrentWorkingDirectory } from "./utils/state.js";
 
 const movesUpOneDirectory = () => {
   const currentDir = getCurrentWorkingDirectory();
@@ -15,7 +12,7 @@ const movesUpOneDirectory = () => {
     return COMMAND_RESULT.NOTHING;
   }
 
-  process.chdir(upperDir);
+  setCurrentWorkingDirectory(upperDir);
 
   return COMMAND_RESULT.SUCCESS;
 };
@@ -32,11 +29,14 @@ const changeToSpecifiedDirectory = (newPath) => {
     const stats = statSync(finalPath);
 
     if (!stats.isDirectory()) {
+      console.log("Operation failed");
       return COMMAND_RESULT.ERROR;
     }
-    process.chdir(finalPath);
+
+    setCurrentWorkingDirectory(finalPath);
     return COMMAND_RESULT.SUCCESS;
   } catch {
+    console.log("Operation failed");
     return COMMAND_RESULT.ERROR;
   }
 };
@@ -70,4 +70,10 @@ const listContentForCurrentDirectory = () => {
   return COMMAND_RESULT.NOTHING;
 };
 
-export { listContentForCurrentDirectory, changeToSpecifiedDirectory, movesUpOneDirectory };
+export {
+  listContentForCurrentDirectory,
+  changeToSpecifiedDirectory,
+  movesUpOneDirectory,
+  getCurrentWorkingDirectory,
+  setCurrentWorkingDirectory,
+};
