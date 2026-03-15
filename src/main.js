@@ -2,10 +2,12 @@ import { handleExit } from "./modules/handleExit.js";
 import { initReadline } from "./modules/initReadline.js";
 import { movesUpOneDirectory } from "./modules/navigation/movesUpOneDirectory.js";
 import { changeToSpecifiedDirectory } from "./modules/navigation/changeToSpecifiedDirectory.js";
+import { listContentForCurrentDirectory } from "./modules/navigation/listContentForCurrentDirectory.js";
 
 const cmdActions = {
   ".exit": handleExit,
   up: movesUpOneDirectory,
+  ls: listContentForCurrentDirectory,
 };
 
 const app = () => {
