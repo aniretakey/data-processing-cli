@@ -6,10 +6,6 @@ import { createHash } from "crypto";
 import { createReadStream } from "fs";
 import { pipeline } from "stream/promises";
 
-// TODO: commands for test
-// cd E:\dev\Rolling Scopes School\RSS-Node\data-processing-cli\src
-// hash-compare --input text.txt --hash text.txt.sha256  --algorithm md5
-
 const supportedAlgorithms = ["sha256", "md5", "sha512"];
 
 export const hashCompare = async (args) => {
@@ -19,10 +15,6 @@ export const hashCompare = async (args) => {
     console.log(`Selected algorithm ${algorithm} doesn't support!`);
     return COMMAND_RESULT.ERROR;
   }
-
-  console.log("file", file);
-  console.log("hashFile", hashFile);
-  console.log("algorithm", algorithm);
 
   const inputFile = resolveAndCheckFileExists(file);
   const hashFilePath = resolveAndCheckFileExists(hashFile);
