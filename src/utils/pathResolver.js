@@ -1,11 +1,12 @@
 import { isAbsolute, resolve } from "node:path";
+import { getCurrentWorkingDirectory } from "../navigation.js";
 
 export const resolvePathFromCwd = (rawPath) => {
   if (!rawPath) {
     return null;
   }
 
-  const cwd = process.cwd();
+  const cwd = getCurrentWorkingDirectory();
 
   if (isAbsolute(rawPath)) {
     return rawPath;

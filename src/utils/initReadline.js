@@ -1,6 +1,6 @@
 import readline from "readline";
-import { getCurrentWorkingDirectory } from "../modules/getCurrentWorkingDirectory.js";
 import { COMMAND_RESULT } from "../const/const.js";
+import { getCurrentWorkingDirectory } from "../navigation.js";
 
 const allowedCommandsList = [
   ".exit",

@@ -3,8 +3,12 @@ import { readdirSync, statSync } from "fs";
 import { COMMAND_RESULT } from "./const/const.js";
 import { resolvePathFromCwd } from "./utils/pathResolver.js";
 
+export const getCurrentWorkingDirectory = () => {
+  return process.cwd();
+};
+
 const movesUpOneDirectory = () => {
-  const currentDir = process.cwd();
+  const currentDir = getCurrentWorkingDirectory();
   const upperDir = resolve(currentDir, "..");
 
   if (currentDir === upperDir) {
@@ -42,7 +46,7 @@ const listContentForCurrentDirectory = () => {
     console.log(item);
   };
 
-  const currentDir = process.cwd();
+  const currentDir = getCurrentWorkingDirectory();
 
   const list = readdirSync(currentDir);
 
