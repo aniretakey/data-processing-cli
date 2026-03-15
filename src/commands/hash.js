@@ -8,7 +8,9 @@ import { resolveAndCheckFileExists } from "../utils/pathResolver.js";
 
 const supportedAlgorithms = ["sha256", "md5", "sha512"];
 
-// TODO: for test: hash --input text.txt --algorithm md5 --save
+// TODO: for test:
+//  cd E:\dev\Rolling Scopes School\RSS-Node\data-processing-cli\src
+//  hash --input text.txt --algorithm md5 --save
 
 const createHashTransform = (algorithm) => {
   const hash = createHash(algorithm);
@@ -20,9 +22,9 @@ const createHashTransform = (algorithm) => {
     },
 
     flush(callback) {
-      const digest = hash.digest("hex");
-      console.log(`${algorithm}: ${digest}`);
-      callback(null, digest);
+      const digestHash = hash.digest("hex");
+      console.log(`${algorithm}: ${digestHash}`);
+      callback(null, digestHash);
     },
   });
 };
