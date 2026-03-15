@@ -1,5 +1,5 @@
 import readline from "readline";
-import { getCurrentWorkingDirectory } from "./getCurrentWorkingDirectory.js";
+import { getCurrentWorkingDirectory } from "../modules/getCurrentWorkingDirectory.js";
 import { COMMAND_RESULT } from "../const/const.js";
 
 const allowedCommandsList = [

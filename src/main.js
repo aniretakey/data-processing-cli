@@ -1,5 +1,5 @@
-import { handleExit } from "./modules/handleExit.js";
-import { initReadline } from "./modules/initReadline.js";
+import { handleExit } from "./utils/handleExit.js";
+import { initReadline } from "./utils/initReadline.js";
 import { changeToSpecifiedDirectory, listContentForCurrentDirectory, movesUpOneDirectory } from "./navigation.js";
 
 const cmdActions = {
