@@ -12,7 +12,9 @@ export const resolvePathFromCwd = (rawPath) => {
 
 export const resolveAndCheckFileExists = (rawPath) => {
   const resolvedPath = resolvePathFromCwd(rawPath);
-  if (!resolvedPath) return null;
+  if (!resolvedPath) {
+    return null;
+  }
 
   try {
     const stats = statSync(resolvedPath);
@@ -29,7 +31,9 @@ export const resolveAndCheckFileExists = (rawPath) => {
 
 export const resolveAndCheckDirectoryExists = (rawPath) => {
   const resolvedPath = resolvePathFromCwd(rawPath);
-  if (!resolvedPath) return null;
+  if (!resolvedPath) {
+    return null;
+  }
 
   try {
     const stats = statSync(resolvedPath);
