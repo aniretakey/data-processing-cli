@@ -3,6 +3,10 @@ import { initReadline } from "./utils/initReadline.js";
 import { changeToSpecifiedDirectory, listContentForCurrentDirectory, movesUpOneDirectory } from "./navigation.js";
 import { parseInput } from "./utils/argParser.js";
 import { getCount } from "./commands/count.js";
+import { hash } from "./commands/hash.js";
+
+// TODO: delete later!
+//  dir for testing E:\dev\Rolling Scopes School\RSS-Node\data-processing-cli\src
 
 const cmdActions = {
   ".exit": handleExit,
@@ -16,7 +20,7 @@ export const initRepl = () => {
   startApp();
 
   readLine.on("line", async (line) => {
-    const { cmd, args } = parseInput(line);
+    const { cmd, args, argsParts } = parseInput(line);
 
     if (!cmd) {
       return;
@@ -38,6 +42,10 @@ export const initRepl = () => {
     if (cmd === "count") {
       const inputPath = args[0]?.replace("--input ", "");
       commandStatus = await getCount(inputPath);
+    }
+
+    if (cmd === "hash") {
+      commandStatus = await hash(argsParts);
     }
 
     processStatus(commandStatus);
