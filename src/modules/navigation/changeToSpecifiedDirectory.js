@@ -14,10 +14,8 @@ export const changeToSpecifiedDirectory = (newPath) => {
 
   if (isAbsolute(newPath)) {
     finalPath = newPath;
-    console.log("absolute!");
   } else {
-    const resolvedPath = resolve(currentWorkingDir, newPath);
-    finalPath = resolvedPath;
+    finalPath = resolve(currentWorkingDir, newPath);
   }
 
   try {
