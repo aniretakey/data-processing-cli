@@ -1,5 +1,10 @@
 import { parseHashCompareArgs } from "../utils/argParser.js";
 import { COMMAND_RESULT } from "../utils/const.js";
+import { resolveAndCheckFileExists } from "../utils/pathResolver.js";
+import { readFile } from "fs/promises";
+import { createHash } from "crypto";
+import { createReadStream } from "fs";
+import { pipeline } from "stream/promises";
 
 // TODO: commands for test
 // cd E:\dev\Rolling Scopes School\RSS-Node\data-processing-cli\src
@@ -18,6 +23,30 @@ export const hashCompare = async (args) => {
   console.log("file", file);
   console.log("hashFile", hashFile);
   console.log("algorithm", algorithm);
+
+  const inputFile = resolveAndCheckFileExists(file);
+  const hashFilePath = resolveAndCheckFileExists(hashFile);
+
+  if (!inputFile || !hashFilePath) {
+    return COMMAND_RESULT.ERROR;
+  }
+
+  const expectedHashRaw = await readFile(hashFilePath, "utf8");
+  const expectedHashTrimmed = expectedHashRaw.trim().toLowerCase();
+
+  const hashStream = createHash(algorithm);
+  let currentHash = "";
+  hashStream.setEncoding("hex");
+  hashStream.on("data", (chunk) => (currentHash += chunk));
+
+  await pipeline(createReadStream(inputFile), hashStream);
+  currentHash = currentHash.toLowerCase();
+
+  if (currentHash === expectedHashTrimmed) {
+    console.log("OK");
+  } else {
+    console.log("MISMATCH");
+  }
 
   return COMMAND_RESULT.SUCCESS;
 };
