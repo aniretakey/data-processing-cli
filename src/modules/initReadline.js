@@ -6,7 +6,7 @@ const allowedCommandsList = [
   ".exit",
   "up",
   "cd",
-  // "ls",
+  "ls",
   // "csv-to-json",
   // "json-to-csv",
   // "count",
