@@ -10,7 +10,7 @@ export const resolvePathFromCwd = (rawPath) => {
   return isAbsolute(rawPath) ? rawPath : resolve(cwd, rawPath);
 };
 
-export const resolveAndCheckFileExists = (rawPath) => {
+export const resolveAndCheckFileExists = (rawPath, silent = false) => {
   const resolvedPath = resolvePathFromCwd(rawPath);
   if (!resolvedPath) {
     return null;
@@ -19,17 +19,21 @@ export const resolveAndCheckFileExists = (rawPath) => {
   try {
     const stats = statSync(resolvedPath);
     if (!stats.isFile()) {
-      console.log("Operation failed");
+      if (!silent) {
+        console.log("Operation failed");
+      }
       return null;
     }
     return resolvedPath;
   } catch {
-    console.log("Operation failed");
+    if (!silent) {
+      console.log("Operation failed");
+    }
     return null;
   }
 };
 
-export const resolveAndCheckDirectoryExists = (rawPath) => {
+export const resolveAndCheckDirectoryExists = (rawPath, silent) => {
   const resolvedPath = resolvePathFromCwd(rawPath);
   if (!resolvedPath) {
     return null;
@@ -38,12 +42,16 @@ export const resolveAndCheckDirectoryExists = (rawPath) => {
   try {
     const stats = statSync(resolvedPath);
     if (!stats.isDirectory()) {
-      console.log("Operation failed");
+      if (!silent) {
+        console.log("Operation failed");
+      }
       return null;
     }
     return resolvedPath;
   } catch {
-    console.log("Operation failed");
+    if (!silent) {
+      console.log("Operation failed");
+    }
     return null;
   }
 };

@@ -16,8 +16,8 @@ export const hashCompare = async (args) => {
     return COMMAND_RESULT.ERROR;
   }
 
-  const inputFile = resolveAndCheckFileExists(file);
-  const hashFilePath = resolveAndCheckFileExists(hashFile);
+  const inputFile = resolveAndCheckFileExists(file, true);
+  const hashFilePath = resolveAndCheckFileExists(hashFile, true);
 
   if (!inputFile || !hashFilePath) {
     return COMMAND_RESULT.ERROR;
