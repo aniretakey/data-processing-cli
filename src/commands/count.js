@@ -1,1 +1,1 @@
-export const count = () => {};
+export const getCount = () => {};

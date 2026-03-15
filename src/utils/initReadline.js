@@ -9,7 +9,7 @@ const allowedCommandsList = [
   "ls",
   // "csv-to-json",
   // "json-to-csv",
-  // "count",
+  "count",
   // "hash",
   // "encrypt",
   // "decrypt",

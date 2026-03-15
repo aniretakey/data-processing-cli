@@ -2,11 +2,13 @@ import { handleExit } from "./utils/handleExit.js";
 import { initReadline } from "./utils/initReadline.js";
 import { changeToSpecifiedDirectory, listContentForCurrentDirectory, movesUpOneDirectory } from "./navigation.js";
 import { parseInput } from "./utils/argParser.js";
+import { getCount } from "./commands/count.js";
 
 const cmdActions = {
   ".exit": handleExit,
   up: movesUpOneDirectory,
   ls: listContentForCurrentDirectory,
+  count: getCount,
 };
 
 export const initRepl = () => {
