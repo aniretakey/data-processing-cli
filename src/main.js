@@ -1,6 +1,7 @@
 import { handleExit } from "./utils/handleExit.js";
 import { initReadline } from "./utils/initReadline.js";
 import { changeToSpecifiedDirectory, listContentForCurrentDirectory, movesUpOneDirectory } from "./navigation.js";
+import { parseInput } from "./utils/argParser.js";
 
 const cmdActions = {
   ".exit": handleExit,
@@ -14,13 +15,11 @@ const app = () => {
   startApp();
 
   readLine.on("line", (line) => {
-    const trimmed = line.trim();
+    const { cmd, args } = parseInput(line);
 
-    if (!trimmed) {
+    if (!cmd) {
       return;
     }
-
-    const [cmd, ...args] = trimmed.split(/\s+/);
 
     handleIncorrectCommand(cmd);
 
@@ -31,7 +30,7 @@ const app = () => {
     }
 
     if (cmd === "cd") {
-      const newPath = args.join(" ");
+      const newPath = args[0];
       commandStatus = changeToSpecifiedDirectory(newPath);
     }
 
