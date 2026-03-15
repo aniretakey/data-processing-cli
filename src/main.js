@@ -14,18 +14,25 @@ const app = () => {
   startApp();
 
   readLine.on("line", (line) => {
-    const lineCommandWithoutWhitespaces = line.trim();
+    const trimmed = line.trim();
 
-    handleIncorrectCommand(lineCommandWithoutWhitespaces);
+    if (!trimmed) {
+      return;
+    }
+
+    const [cmd, ...args] = trimmed.split(/\s+/);
+
+    handleIncorrectCommand(cmd);
 
     let commandStatus;
 
-    if (lineCommandWithoutWhitespaces in cmdActions) {
-      commandStatus = cmdActions[lineCommandWithoutWhitespaces]();
+    if (cmd in cmdActions) {
+      commandStatus = cmdActions[cmd]();
     }
 
-    if (lineCommandWithoutWhitespaces === "cd") {
-      changeToSpecifiedDirectory("test");
+    if (cmd === "cd") {
+      const newPath = args.join(" ");
+      commandStatus = changeToSpecifiedDirectory(newPath);
     }
 
     processStatus(commandStatus);
