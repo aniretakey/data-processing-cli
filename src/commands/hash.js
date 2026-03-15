@@ -1,33 +1,18 @@
 import { parseHashArgs } from "../utils/argParser.js";
 import { COMMAND_RESULT } from "../utils/const.js";
 import { createHash } from "crypto";
-import { Transform } from "stream";
 import { pipeline } from "stream/promises";
 import { createReadStream } from "fs";
+import { writeFile } from "fs/promises";
 import { resolveAndCheckFileExists } from "../utils/pathResolver.js";
+import { getCurrentWorkingDirectory } from "../utils/state.js";
+import { resolve } from "path";
 
 const supportedAlgorithms = ["sha256", "md5", "sha512"];
 
 // TODO: for test:
 //  cd E:\dev\Rolling Scopes School\RSS-Node\data-processing-cli\src
 //  hash --input text.txt --algorithm md5 --save
-
-const createHashTransform = (algorithm) => {
-  const hash = createHash(algorithm);
-
-  return new Transform({
-    transform(chunk, encoding, callback) {
-      hash.update(chunk);
-      callback();
-    },
-
-    flush(callback) {
-      const digestHash = hash.digest("hex");
-      console.log(`${algorithm}: ${digestHash}`);
-      callback(null, digestHash);
-    },
-  });
-};
 
 export const hash = async (args) => {
   const { file, algorithm, save } = parseHashArgs(args);
@@ -42,8 +27,29 @@ export const hash = async (args) => {
   }
 
   const filePath = resolveAndCheckFileExists(file);
+  if (!filePath) return COMMAND_RESULT.ERROR;
 
-  await pipeline(createReadStream(filePath), createHashTransform(algorithm));
+  try {
+    const hashStream = createHash(algorithm);
 
-  return COMMAND_RESULT.NOTHING;
+    let resHash = "";
+    hashStream.setEncoding("hex");
+    hashStream.on("data", (chunk) => (resHash += chunk));
+
+    await pipeline(createReadStream(filePath), hashStream);
+
+    console.log(`${algorithm}: ${resHash}`);
+
+    if (save) {
+      const newFileName = `${file}.${algorithm}`;
+      const cwd = getCurrentWorkingDirectory();
+      const hashFilePath = resolve(cwd, newFileName);
+
+      await writeFile(hashFilePath, resHash);
+    }
+
+    return COMMAND_RESULT.SUCCESS;
+  } catch {
+    return COMMAND_RESULT.ERROR;
+  }
 };
