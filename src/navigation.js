@@ -70,10 +70,4 @@ const listContentForCurrentDirectory = () => {
   }
 };
 
-export {
-  listContentForCurrentDirectory,
-  changeToSpecifiedDirectory,
-  movesUpOneDirectory,
-  getCurrentWorkingDirectory,
-  setCurrentWorkingDirectory,
-};
+export { listContentForCurrentDirectory, changeToSpecifiedDirectory, movesUpOneDirectory, setCurrentWorkingDirectory };
