@@ -1,6 +1,6 @@
 import { resolve } from "path";
 import { readdirSync, statSync } from "fs";
-import { COMMAND_RESULT } from "./const/const.js";
+import { COMMAND_RESULT } from "./utils/const.js";
 import { resolvePathFromCwd } from "./utils/pathResolver.js";
 import { getCurrentWorkingDirectory, setCurrentWorkingDirectory } from "./utils/state.js";
 
