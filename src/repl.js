@@ -8,7 +8,6 @@ const cmdActions = {
   ".exit": handleExit,
   up: movesUpOneDirectory,
   ls: listContentForCurrentDirectory,
-  count: getCount,
 };
 
 export const initRepl = () => {
@@ -16,7 +15,7 @@ export const initRepl = () => {
 
   startApp();
 
-  readLine.on("line", (line) => {
+  readLine.on("line", async (line) => {
     const { cmd, args } = parseInput(line);
 
     if (!cmd) {
@@ -34,6 +33,11 @@ export const initRepl = () => {
     if (cmd === "cd") {
       const newPath = args[0];
       commandStatus = changeToSpecifiedDirectory(newPath);
+    }
+
+    if (cmd === "count") {
+      const inputPath = args[0]?.replace("--input ", "");
+      commandStatus = await getCount(inputPath);
     }
 
     processStatus(commandStatus);
