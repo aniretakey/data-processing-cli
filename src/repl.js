@@ -6,9 +6,6 @@ import { getCount } from "./commands/count.js";
 import { hash } from "./commands/hash.js";
 import { hashCompare } from "./commands/hashCompare.js";
 
-// TODO: delete later!
-//  dir for testing E:\dev\Rolling Scopes School\RSS-Node\data-processing-cli\src
-
 const cmdActions = {
   ".exit": handleExit,
   up: movesUpOneDirectory,
