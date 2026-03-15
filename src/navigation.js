@@ -36,38 +36,38 @@ const changeToSpecifiedDirectory = (newPath) => {
     setCurrentWorkingDirectory(finalPath);
     return COMMAND_RESULT.SUCCESS;
   } catch {
-    console.log("Operation failed");
     return COMMAND_RESULT.ERROR;
   }
 };
 
 const listContentForCurrentDirectory = () => {
-  const logItem = (item) => {
-    console.log(item);
-  };
-
+  const logItem = (item) => console.log(item);
   const currentDir = getCurrentWorkingDirectory();
 
-  const list = readdirSync(currentDir);
+  try {
+    const list = readdirSync(currentDir);
 
-  const files = [];
-  const folders = [];
+    const files = [],
+      folders = [];
 
-  list.forEach((item) => {
-    const pathToElem = resolve(currentDir, item);
-    const stat = statSync(pathToElem);
+    list.forEach((item) => {
+      const pathToElem = resolve(currentDir, item);
+      const stat = statSync(pathToElem);
 
-    if (stat.isDirectory()) {
-      folders.push(`${item} [folder]`);
-    } else {
-      files.push(`${item} [file]`);
-    }
-  });
+      if (stat.isDirectory()) {
+        folders.push(`${item} [folder]`);
+      } else {
+        files.push(`${item} [file]`);
+      }
+    });
 
-  folders.sort((a, b) => a.localeCompare(b)).forEach(logItem);
-  files.sort((a, b) => a.localeCompare(b)).forEach(logItem);
+    folders.sort((a, b) => a.localeCompare(b)).forEach(logItem);
+    files.sort((a, b) => a.localeCompare(b)).forEach(logItem);
 
-  return COMMAND_RESULT.NOTHING;
+    return COMMAND_RESULT.NOTHING;
+  } catch {
+    return COMMAND_RESULT.ERROR;
+  }
 };
 
 export {
